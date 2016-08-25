@@ -1,4 +1,4 @@
-;/*! showdown 19-08-2016 */
+;/*! showdown 25-08-2016 */
 (function(){
 /**
  * Created by Tivie on 13-07-2015.
@@ -1253,13 +1253,18 @@ showdown.subParser('autoLinks', function (text, options, globals) {
   }
 
   function replaceLink(wm, link) {
-    var lnkTxt = link;
+    var lnkTxt = link, attrs = [];
     if (/^www\./i.test(link)) {
       link = link.replace(/^www\./i, 'http://www.');
     }
-
-
-    return '<a '+ attrs + '>' + lnkTxt + '</a>';
+    attrs.push('href="' + link + '"');
+    if (typeof options.simplifiedAutoLink === 'object') {
+      if (options.simplifiedAutoLink.target) {
+        attrs.push('target="' + options.simplifiedAutoLink.target + '"');
+      }
+    }
+    attrs = attrs.join(' ');
+    return '<a ' + attrs + '>' + lnkTxt + '</a>';
   }
 
   function replaceMail(wholeMatch, m1) {
