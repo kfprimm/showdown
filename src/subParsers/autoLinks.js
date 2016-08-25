@@ -19,11 +19,18 @@ showdown.subParser('autoLinks', function (text, options, globals) {
   }
 
   function replaceLink(wm, link) {
-    var lnkTxt = link;
+    var lnkTxt = link, attrs = [];
     if (/^www\./i.test(link)) {
       link = link.replace(/^www\./i, 'http://www.');
     }
-    return '<a href="' + link + '">' + lnkTxt + '</a>';
+    attrs.push('href="' + link + '"');
+    if (typeof options.simplifiedAutoLink === 'object') {
+      if (options.simplifiedAutoLink.target) {
+        attrs.push('target="' + options.simplifiedAutoLink.target + '"');
+      }
+    }
+    attrs = attrs.join(' ');
+    return '<a ' + attrs + '>' + lnkTxt + '</a>';
   }
 
   function replaceMail(wholeMatch, m1) {

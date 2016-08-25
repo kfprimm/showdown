@@ -1257,7 +1257,9 @@ showdown.subParser('autoLinks', function (text, options, globals) {
     if (/^www\./i.test(link)) {
       link = link.replace(/^www\./i, 'http://www.');
     }
-    return '<a href="' + link + '">' + lnkTxt + '</a>';
+
+
+    return '<a '+ attrs + '>' + lnkTxt + '</a>';
   }
 
   function replaceMail(wholeMatch, m1) {
